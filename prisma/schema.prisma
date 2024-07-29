@@ -16,6 +16,8 @@ datasource db {
 model User {
   id            String     @id @default(cuid())
   displayName   String?
+  email         String     @unique
+  password      String?
   profileUrl    String?
   avatar        String?
   about         String?
@@ -27,6 +29,8 @@ model User {
   interests     String[]   @default([])
   accounts      Accounts[]
   wallets       Wallets[]
+  emailtoken    String?
+  active        Boolean    @default(false)
 }
 
 model Accounts {

@@ -1,5 +1,4 @@
 import { HealthModule } from './health/health.module';
-import { MailerModule } from './mailer/mailer.module';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -22,7 +21,6 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
     UserModule,
-    MailerModule,
     HealthModule,
     AuthModule,
   ],
