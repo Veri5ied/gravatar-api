@@ -1,6 +1,8 @@
 import {
+  Body,
   Controller,
   HttpException,
+  Patch,
   Post,
   UploadedFile,
   UseGuards,
@@ -13,6 +15,7 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorators/user.decorator';
 import { User } from '@prisma/client';
+import { AboutDto } from './dto/about.dto';
 
 @Controller('api/user')
 @UseGuards(AuthGuard('jwt'))
@@ -35,5 +38,11 @@ export class UserController {
     } catch (error) {
       throw new HttpException('Unable to upload image', error);
     }
+  }
+
+  @Patch('about')
+  async updateUserAbout(@GetUser() user: User, @Body() aboutDto: AboutDto) {
+    const { id } = user;
+    return await this.userService.updateUserAbout(id, aboutDto);
   }
 }

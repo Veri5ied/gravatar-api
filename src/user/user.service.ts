@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { AboutDto } from './dto/about.dto';
 
 @Injectable()
 export class UserService {
@@ -22,6 +23,35 @@ export class UserService {
     return {
       data: user,
       messsage: 'Avatar uploaded successfully',
+    };
+  }
+
+  //update about page => [Display Name, About, Pronunciation, Pronouns, Location, Job Title, Company]
+  async updateUserAbout(id: string, aboutDto: AboutDto) {
+    const about = await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        ...aboutDto,
+      },
+      select: {
+        id: true,
+        displayName: true,
+        profileUrl: true,
+        about: true,
+        pronunciation: true,
+        pronouns: true,
+        location: true,
+        jobTitle: true,
+        company: true,
+        interests: true,
+      },
+    });
+
+    return {
+      message: 'About updated successfully',
+      data: about,
     };
   }
 }
