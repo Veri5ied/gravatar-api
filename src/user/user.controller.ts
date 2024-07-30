@@ -31,7 +31,7 @@ export class UserController {
     try {
       const { id } = user;
       const res = await this.cloudinaryService.uploadFile(file);
-      await this.userService.userAvatarUpload(id, res.secure_url);
+      return await this.userService.userAvatarUpload(id, res.secure_url);
     } catch (error) {
       throw new HttpException('Unable to upload image', error);
     }

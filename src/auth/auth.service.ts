@@ -28,7 +28,9 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Account not found!');
     const comparepasswords = await argon.verify(user.password, password);
     if (!comparepasswords)
-      throw new ForbiddenException('Passwords is incorrect');
+      throw new ForbiddenException('Password is incorrect');
+    if (!user.active)
+      throw new ForbiddenException('Please verify your account to continue');
     const token = await this.signToken(user.id, user.email);
     return {
       message: 'Authentication was successful',

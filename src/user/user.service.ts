@@ -19,6 +19,9 @@ export class UserService {
       },
     });
 
-    return user;
+    return {
+      data: user,
+      messsage: 'Avatar uploaded successfully',
+    };
   }
 }
