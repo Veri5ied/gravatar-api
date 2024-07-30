@@ -6,19 +6,21 @@ import { CreateAccountDto } from './dto/create-account.dto';
 export class AccountsService {
   constructor(private prisma: PrismaService) {}
 
-  /* async createAccounts(userId: string, createAccountDto: CreateAccountDto) {
-    const accounts = await this.prisma.accounts.create({
-      data: {
-        ...createAccountDto,
-        userId,
-      },
+  async createAccounts(userId: string, createAccountDto: CreateAccountDto) {
+    const accountsData = createAccountDto.account.map((accountField) => ({
+      ...accountField,
+      userId,
+    }));
+
+    await this.prisma.accounts.createMany({
+      data: accountsData,
     });
 
     return {
-      data: accounts,
+      data: accountsData,
       message: 'Accounts created successfully',
     };
-  } */
+  }
 
   /*  async updateAccounts(id: string, createAccountDto: CreateAccountDto) {
     const accounts = await this.prisma.accounts.update({

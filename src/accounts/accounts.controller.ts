@@ -17,7 +17,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class AccountsController {
   constructor(private accountService: AccountsService) {}
 
-  /*  @Post()
+  @Post()
   async createAccounts(
     @GetUser() user: User,
     @Body() createAccountsDto: CreateAccountDto,
@@ -25,6 +25,8 @@ export class AccountsController {
     const { id } = user;
     return await this.accountService.createAccounts(id, createAccountsDto);
   }
+
+  /*  
 
   @Patch(':id')
   async updateAccount(
