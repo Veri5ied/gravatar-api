@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { GetUser } from 'src/auth/decorators/user.decorator';
 import { User } from '@prisma/client';
@@ -26,13 +19,8 @@ export class AccountsController {
     return await this.accountService.createAccounts(id, createAccountsDto);
   }
 
-  /*  
-
-  @Patch(':id')
-  async updateAccount(
-    @Param('id') id: string,
-    @Body() createAccountsDto: CreateAccountDto,
-  ) {
-    return await this.accountService.createAccounts(id, createAccountsDto);
-  } */
+  @Get()
+  async getAccounts(@GetUser() { id }: User) {
+    return await this.accountService.getAccounts(id);
+  }
 }

@@ -22,19 +22,16 @@ export class AccountsService {
     };
   }
 
-  /*  async updateAccounts(id: string, createAccountDto: CreateAccountDto) {
-    const accounts = await this.prisma.accounts.update({
+  async getAccounts(userId: string) {
+    return await this.prisma.accounts.findMany({
       where: {
-        id,
+        userId,
       },
-      data: {
-        ...createAccountDto,
+      select: {
+        id: true,
+        name: true,
+        value: true,
       },
     });
-
-    return {
-      data: accounts,
-      message: 'Accounts updated successfully',
-    };
-  } */
+  }
 }
