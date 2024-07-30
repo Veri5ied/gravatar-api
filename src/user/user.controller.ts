@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpException,
+  Param,
   Patch,
   Post,
   UploadedFile,
@@ -29,6 +30,11 @@ export class UserController {
   @Get('')
   async fetcProfile(@GetUser() user: User) {
     return await this.userService.fetchProfile(user.id);
+  }
+
+  @Get(':url')
+  async fetcProfileByUrl(@Param('url') url: string) {
+    return await this.userService.fetchProfileByUrl(url);
   }
 
   @Post('avatar/upload')

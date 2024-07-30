@@ -31,33 +31,29 @@ model User {
   wallets       Wallets[]
   emailtoken    String?
   active        Boolean    @default(false)
+  contacts      Contact[]
 }
 
 model Accounts {
-  id        String  @id @default(cuid())
-  instagram String?
-  threads   String?
-  twitter   String?
-  tiktok    String?
-  github    String?
-  dribbble  String?
-  twitch    String?
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
+  id     String @id @default(cuid())
+  name   String
+  value  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Wallets {
-  id      String  @id @default(cuid())
-  paypal  String?
-  patreon String?
-  venmo   String?
-  bitcoin String?
-  user    User    @relation(fields: [userId], references: [id])
-  userId  String
+  id     String @id @default(cuid())
+  name   String
+  value  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Contact {
-  id    String  @id @default(cuid())
-  email String?
-  phone String?
+  id     String @id @default(cuid())
+  name   String
+  value  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

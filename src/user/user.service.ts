@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AboutDto } from './dto/about.dto';
 
@@ -8,19 +13,50 @@ export class UserService {
 
   //get profile when logged in
   async fetchProfile(id: string) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          id,
+        },
+        include: {
+          wallets: true,
+          accounts: true,
+        },
+      });
+      if (!user) throw new NotFoundException('User not found');
+      delete user.emailtoken;
+      delete user.password;
+      return {
+        data: user,
+        message: 'User profile loaded',
+      };
+    } catch (error) {
+      throw new HttpException('Unable to fetch profile', HttpStatus.NOT_FOUND);
+    }
+  }
 
-    delete user.emailtoken;
-    delete user.password;
-
-    return {
-      data: user,
-      message: 'Profile fetched successfully',
-    };
+  //get profile by profileUrl
+  async fetchProfileByUrl(url: string) {
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          profileUrl: url,
+        },
+        include: {
+          wallets: true,
+          accounts: true,
+        },
+      });
+      if (!user) throw new NotFoundException('User not found');
+      delete user.emailtoken;
+      delete user.password;
+      return {
+        data: user,
+        message: 'User profile loaded',
+      };
+    } catch (error) {
+      throw new HttpException('Unable to fetch profile', HttpStatus.NOT_FOUND);
+    }
   }
 
   //avatar upload
