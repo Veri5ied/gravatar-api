@@ -6,6 +6,23 @@ import { AboutDto } from './dto/about.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  //get profile when logged in
+  async fetchProfile(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    delete user.emailtoken;
+    delete user.password;
+
+    return {
+      data: user,
+      message: 'Profile fetched successfully',
+    };
+  }
+
   //avatar upload
   async userAvatarUpload(id: string, url: string) {
     const user = await this.prisma.user.update({

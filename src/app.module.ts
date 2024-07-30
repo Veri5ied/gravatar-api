@@ -11,6 +11,8 @@ import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { CloudinaryService } from './cloudinary/cloudinary.service';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { WalletsModule } from './wallets/wallets.module';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     HealthModule,
     AuthModule,
     CloudinaryModule,
+    WalletsModule,
+    AccountsModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, CloudinaryService],

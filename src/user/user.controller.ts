@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   Patch,
   Post,
@@ -24,6 +25,11 @@ export class UserController {
     private userService: UserService,
     private cloudinaryService: CloudinaryService,
   ) {}
+
+  @Get('')
+  async fetcProfile(@GetUser() user: User) {
+    return await this.userService.fetchProfile(user.id);
+  }
 
   @Post('avatar/upload')
   @UseInterceptors(FileInterceptor('file'))
