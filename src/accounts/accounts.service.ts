@@ -37,21 +37,14 @@ export class AccountsService {
   }
 
   async updateAccounts(accountId: string, updateAccountDto: UpdateAccountDto) {
-    const accounts = updateAccountDto.account;
-
-    await this.prisma.$transaction(
-      accounts.map((accountData) =>
-        this.prisma.accounts.update({
-          where: {
-            id: accountId,
-          },
-          data: {
-            name: accountData.name,
-            value: accountData.value,
-          },
-        }),
-      ),
-    );
+    const accounts = await this.prisma.accounts.update({
+      where: {
+        id: accountId,
+      },
+      data: {
+        ...updateAccountDto,
+      },
+    });
 
     return {
       data: accounts,

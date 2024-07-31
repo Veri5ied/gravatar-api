@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { WalletItemDto } from './dto/wallet.dto';
+import { UpdateWalletDto, WalletItemDto } from './dto/wallet.dto';
 
 @Injectable()
 export class WalletsService {
@@ -36,22 +36,17 @@ export class WalletsService {
     });
   }
 
-  async updateWallet(walletId: string, walletDto: WalletItemDto) {
-    const wallet = walletDto.wallet;
+  async updateWallet(walletId: string, walletDto: UpdateWalletDto) {
+    const wallet = await this.prisma.wallets.update({
+      where: {
+        id: walletId,
+      },
+      data: {
+        ...walletDto,
+      },
+    });
 
-    await this.prisma.$transaction(
-      wallet.map((el) =>
-        this.prisma.wallets.update({
-          where: {
-            id: walletId,
-          },
-          data: {
-            ...el,
-          },
-        }),
-      ),
-    );
-
+    delete wallet.userId;
     return {
       data: wallet,
       message: 'Wallet updated successfully',

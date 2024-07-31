@@ -1,17 +1,9 @@
-import { Type } from 'class-transformer';
-import { IsArray, IsString, ValidateNested } from 'class-validator';
+import { IsString } from 'class-validator';
 
-class UpdateAccountFieldDto {
+export class UpdateAccountDto {
   @IsString()
   name: string;
 
   @IsString()
   value?: string;
-}
-
-export class UpdateAccountDto {
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => UpdateAccountFieldDto)
-  account: UpdateAccountFieldDto[];
 }

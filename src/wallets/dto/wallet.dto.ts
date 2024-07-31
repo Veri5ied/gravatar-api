@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 class WalletDTO {
   @IsString()
@@ -16,4 +22,14 @@ export class WalletItemDto {
   @ValidateNested({ each: true })
   @Type(() => WalletDTO)
   wallet: WalletDTO[];
+}
+
+export class UpdateWalletDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  value: string;
 }
