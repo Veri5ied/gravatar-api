@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { WalletsService } from './wallets.service';
 import { GetUser } from 'src/auth/decorators/user.decorator';
 import { User } from '@prisma/client';
@@ -21,5 +29,10 @@ export class WalletsController {
   @Get('')
   async getWalletAccounts(@GetUser() { id }: User) {
     return await this.walletService.getWallets(id);
+  }
+
+  @Delete(':id')
+  async deleteWallet(@Param('id') id: string) {
+    return await this.walletService.deleteWallet(id);
   }
 }

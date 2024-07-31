@@ -35,4 +35,39 @@ export class WalletsService {
       },
     });
   }
+
+  async updateWallet(walletId: string, walletDto: WalletItemDto) {
+    const wallet = walletDto.wallet;
+
+    await this.prisma.$transaction(
+      wallet.map((el) =>
+        this.prisma.wallets.update({
+          where: {
+            id: walletId,
+          },
+          data: {
+            ...el,
+          },
+        }),
+      ),
+    );
+
+    return {
+      data: wallet,
+      message: 'Wallet updated successfully',
+    };
+  }
+
+  async deleteWallet(walletId: string) {
+    await this.prisma.wallets.delete({
+      where: {
+        id: walletId,
+      },
+    });
+
+    return {
+      message: 'Wallet deleted successfully',
+      statusCode: HttpStatus.OK,
+    };
+  }
 }
