@@ -21,6 +21,7 @@ export class UserService {
         include: {
           wallets: true,
           accounts: true,
+          contacts: true,
         },
       });
       if (!user) throw new NotFoundException('User not found');
@@ -45,6 +46,7 @@ export class UserService {
         include: {
           wallets: true,
           accounts: true,
+          contacts: true,
         },
       });
       if (!user) throw new NotFoundException('User not found');
