@@ -13,6 +13,7 @@ import { CloudinaryService } from './cloudinary/cloudinary.service';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { WalletsModule } from './wallets/wallets.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AccountsModule } from './accounts/accounts.module';
     CloudinaryModule,
     WalletsModule,
     AccountsModule,
+    ContactModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, CloudinaryService],
